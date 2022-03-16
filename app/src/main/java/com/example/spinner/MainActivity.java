@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity
         Spinner spinner = findViewById(R.id.spinnerFrom);
         Spinner spinner2 = findViewById(R.id.spinner2);
 
-        // Настраиваем адаптер
+        // Настраиваем адаптер//
         ArrayAdapter<?> adapter =
                 ArrayAdapter.createFromResource(this, R.array.catNames,
                         android.R.layout.simple_spinner_item);
