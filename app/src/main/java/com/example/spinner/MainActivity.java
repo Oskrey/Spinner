@@ -67,11 +67,9 @@ public class MainActivity extends AppCompatActivity
                         case 3:
                             value = value * 1000;
                             break;
-                        default:
-                            DecimalFormat dec = new DecimalFormat(value);
-                            throw new IllegalStateException("Unexpected value: " + spinnerFromPos);
-                            ((TextView)findViewById(R.id.textView3)).setText(toString());
                     }
+                            ((TextView)findViewById(R.id.textView3)).setText(Double.toString(value));
+
                 }
                 else
                 {
