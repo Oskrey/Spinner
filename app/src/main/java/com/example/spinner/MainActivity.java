@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,60 +24,108 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Spinner spinner = findViewById(R.id.spinnerFrom);
-        Spinner spinner2 = findViewById(R.id.spinner2);
+        Spinner spinnerF = findViewById(R.id.spinnerFrom);
+        Spinner spinnerT = findViewById(R.id.spinner2);
 
         // Настраиваем адаптер//
-        ArrayAdapter<?> adapter =
-                ArrayAdapter.createFromResource(this, R.array.catNames,
+        ArrayAdapter<?> adappterLenghtNames =
+                ArrayAdapter.createFromResource(this, R.array.lenghtNames,
                         android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adappterLenghtNames.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Вызываем адаптер
-        spinner.setAdapter(adapter);
+
 
         // Настраиваем адаптер
-        ArrayAdapter<?> adapter2 =
-                ArrayAdapter.createFromResource(this, R.array.catNames,
+        ArrayAdapter<?> adapterWeithNames =
+                ArrayAdapter.createFromResource(this, R.array.weithNames,
                         android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adappterLenghtNames.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Вызываем адаптер
-        spinner2.setAdapter(adapter);
 
-        String selected = spinner.getSelectedItem().toString();
+        String selected = spinnerT.getSelectedItem().toString();
         Toast.makeText(getApplicationContext(), selected, Toast.LENGTH_SHORT).show();
-        selected = spinner.getSelectedItem().toString();
+        selected = spinnerT.getSelectedItem().toString();
 
-        String selected2 = spinner2.getSelectedItem().toString();
+        String selected2 = spinnerT.getSelectedItem().toString();
         Toast.makeText(getApplicationContext(), selected2, Toast.LENGTH_SHORT).show();
-        selected2 = spinner2.getSelectedItem().toString();
+        selected2 = spinnerT.getSelectedItem().toString();
         Button button = findViewById(R.id.button2);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EditText editValue = findViewById(R.id.valuefrom);
-                if(!editValue.getText().toString().trim().isEmpty())
-                {
-                    double value = Double.parseDouble(editValue.getText().toString());
-                    int spinnerFromPos = spinner.getSelectedItemPosition();
-                    switch (spinnerFromPos) {
-                        case 0:
-                            value = value / 1000;
-                            break;
-                        case 1:
-                            value = value / 100;
-                            break;
-                        case 3:
-                            value = value * 1000;
-                            break;
-                    }
-                            ((TextView)findViewById(R.id.textView3)).setText(Double.toString(value));
+
+        RadioGroup radioGroup =findViewById(R.id.rg);
+        //--------------------------------------------------------------------------
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            if (radioGroup.getCheckedRadioButtonId() == -1)
+            {
+                // no radio buttons are checked
+            }
+            else if (radioGroup.getCheckedRadioButtonId() == 0)
+            {
+                spinnerT.setAdapter(adappterLenghtNames);
+
+            }
+            else
+            {
+                spinnerF.setAdapter(adappterLenghtNames);
+
+            }
+
+        });
+        button.setOnClickListener(view -> {
+            EditText editValue = findViewById(R.id.valuefrom);
+            if(!editValue.getText().toString().trim().isEmpty())
+            {
+                double value = Double.parseDouble(editValue.getText().toString());
+                int spinnerFromPos = spinnerF.getSelectedItemPosition();
+                int spinnerTo = spinnerT.getSelectedItemPosition();
+                switch (spinnerTo){
+                    case 0:
+                        switch (spinnerFromPos) {
+                            case 0:
+                                break;
+                            case 1:
+                                value *= 10;
+                                break;
+                            case 2:
+                                value *= 1000;
+                                break;
+                                }
+                    break;
+                    case 1:
+                        switch (spinnerFromPos) {
+                            case 0:
+                                value /= 10;
+                                break;
+                            case 1:
+                                break;
+                            case 2:
+                                value *= 100;
+                                break;
+                        }
+                        break;
+                    case 2:
+                        switch (spinnerFromPos) {
+                            case 0:
+                                value /= 1000;
+                                break;
+                            case 1:
+                                value /= 100;
+                                break;
+                            case 2:
+                                break;
+                        }
+                        break;
 
                 }
-                else
-                {
-                    ((TextView)findViewById(R.id.textView3)).setText("данные введены неверно");
-                }
+                DecimalFormat decimalFormat = new DecimalFormat("#.################");
+
+                        ((TextView)findViewById(R.id.valueTo)).setText(decimalFormat.format(value));
+
             }
+            else
+            {
+                ((TextView)findViewById(R.id.valueTo)).setText("данные введены неверно");
+            }
+
         });
 
 
