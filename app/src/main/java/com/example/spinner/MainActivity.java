@@ -33,42 +33,44 @@ public class MainActivity extends AppCompatActivity {
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             if (radioGroup.getCheckedRadioButtonId() == -1) {
                 // no radio buttons are checked
-            } else if (radioGroup.getCheckedRadioButtonId() == 0) {
+            } else
+            {
+                RadioButton radioButton = findViewById(checkedId);
+                int x =  radioButton.getId();
+                switch (x)
+                {
+                    case (R.id.radioButtonLenght):
+                        // Настраиваем адаптер//
+                        ArrayAdapter<?> adappterLenghtNames = ArrayAdapter.createFromResource(this, R.array.lenghtNames,android.R.layout.simple_spinner_item);
+                        adappterLenghtNames.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        // Вызываем адаптер
+                        spinnerT.setAdapter(adappterLenghtNames);
+                        spinnerF.setAdapter(adappterLenghtNames);
+                        String selected = spinnerT.getSelectedItem().toString();
+                        Toast.makeText(getApplicationContext(), selected, Toast.LENGTH_SHORT).show();
+                        selected = spinnerT.getSelectedItem().toString();
+                        button.setOnClickListener(view -> lenght());
+                        break;
+                    case (R.id.radioButtonWeight):
+                        // Настраиваем адаптер
+                        ArrayAdapter<?> adapterWeithNames =ArrayAdapter.createFromResource(this, R.array.weithNames, android.R.layout.simple_spinner_item);
+                        adapterWeithNames.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        // Вызываем адаптер
 
-                // Настраиваем адаптер//
-                ArrayAdapter<?> adappterLenghtNames =
-                        ArrayAdapter.createFromResource(this, R.array.lenghtNames,
-                                android.R.layout.simple_spinner_item);
-                adappterLenghtNames.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                // Вызываем адаптер
-                spinnerT.setAdapter(adappterLenghtNames);
-                spinnerF.setAdapter(adappterLenghtNames);
-                String selected = spinnerT.getSelectedItem().toString();
-                Toast.makeText(getApplicationContext(), selected, Toast.LENGTH_SHORT).show();
-                selected = spinnerT.getSelectedItem().toString();
-                button.setOnClickListener(view -> lenght());
+                        String selected2 = spinnerT.getSelectedItem().toString();
+                        Toast.makeText(getApplicationContext(), selected2, Toast.LENGTH_SHORT).show();
+                        selected2 = spinnerT.getSelectedItem().toString();
+
+                        spinnerT.setAdapter(adapterWeithNames);
+                        spinnerF.setAdapter(adapterWeithNames);
+
+                        button.setOnClickListener(view -> weight());
+                        break;
 
 
-            } else {
-                // Настраиваем адаптер
-                ArrayAdapter<?> adapterWeithNames =
-                        ArrayAdapter.createFromResource(this, R.array.weithNames,
-                                android.R.layout.simple_spinner_item);
-                adapterWeithNames.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                // Вызываем адаптер
-
-
-                String selected2 = spinnerT.getSelectedItem().toString();
-                Toast.makeText(getApplicationContext(), selected2, Toast.LENGTH_SHORT).show();
-                selected2 = spinnerT.getSelectedItem().toString();
-
-                spinnerT.setAdapter(adapterWeithNames);
-                spinnerF.setAdapter(adapterWeithNames);
-
-                button.setOnClickListener(view -> weight());
-
-
+                }
             }
+
 
         });
     }
@@ -91,6 +93,8 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         case 2:
                             value *= 1000;
+                        case 3:
+                            value *= 1000000;
                             break;
                     }
                     break;
@@ -104,6 +108,10 @@ public class MainActivity extends AppCompatActivity {
                         case 2:
                             value *= 100;
                             break;
+                        case 3:
+                            value *= 100000;
+                            break;
+
                     }
                     break;
                 case 2:
@@ -115,6 +123,23 @@ public class MainActivity extends AppCompatActivity {
                             value /= 100;
                             break;
                         case 2:
+                            break;
+                        case 3:
+                            value *= 1000;
+                    }
+                    break;
+                case 3:
+                    switch (spinnerFromPos) {
+                        case 0:
+                            value /= 1000000;
+                            break;
+                        case 1:
+                            value /= 100000;
+                            break;
+                        case 2:
+                            value /= 1000;
+                            break;
+                        case 3:
                             break;
                     }
                     break;
@@ -146,34 +171,58 @@ public class MainActivity extends AppCompatActivity {
                         case 0:
                             break;
                         case 1:
-                            value *= 10;
+                            value *= 1000;
                             break;
                         case 2:
-                            value *= 1000;
+                            value *= 100000;
+                            break;
+                        case 3:
+                            value *= 1000000;
                             break;
                     }
                     break;
                 case 1:
                     switch (spinnerFromPos) {
                         case 0:
-                            value /= 10;
+                            value /= 1000;
                             break;
                         case 1:
                             break;
                         case 2:
                             value *= 100;
                             break;
+                        case 3:
+                            value *= 1000;
+                            break;
+
                     }
                     break;
                 case 2:
                     switch (spinnerFromPos) {
                         case 0:
-                            value /= 1000;
+                            value /= 100000;
                             break;
                         case 1:
                             value /= 100;
                             break;
                         case 2:
+                            break;
+                        case 3:
+                            value *= 10;
+                    }
+                    break;
+                case 3:
+                    switch (spinnerFromPos) {
+                        case 0:
+                            value /= 1000000;
+                            break;
+                        case 1:
+                            value /= 1000;
+                            break;
+                        case 2:
+                            value /= 10;
+                            break;
+                        case 3:
                             break;
                     }
                     break;
